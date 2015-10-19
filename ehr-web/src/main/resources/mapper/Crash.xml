@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ehr.dao.TestDAO">
+
+	<sql id="crashTraceDetailV2Columns">
+		id,crash_name,crash_name_id,cause,threads,activity_history,device_info,build_id,app_id,app_version_id,os_id,os_version_id,manufacturer_id,model_id,device_type_id,timestamp,device_id,running_apps
+		,exception_type,exception_file,exception_class,exception_method,exception_index
+	</sql>
+	
+
+	<sql id="insertCrashTraceV2Columns">
+		crash_name,crash_name_id,cause,threads,activity_history,device_info,build_id,app_id,app_version_id,os_id,os_version_id,manufacturer_id,model_id,device_type_id,timestamp,device_id,running_apps
+		,exception_type,exception_file,exception_class,exception_method,exception_index
+	</sql>
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO crashtracev2 (
+		<include refid="insertCrashTraceV2Columns" />
+		)
+		VALUES (
+		#{crashName},
+		#{crashNameId},
+		#{cause},
+		#{threads},
+		#{activityHistory},
+		#{deviceInfo},
+		#{buildId},
+		#{appId},
+		#{appVersionId},
+		#{osId},
+		#{osVersionId},
+		#{manufacturerId},
+		#{modelId},
+		#{deviceTypeId},
+		#{timestamp}/1000,
+		#{deviceId},
+		#{runningApps},
+		#{exceptionType},
+		#{exceptionFile},
+		#{exceptionClass},
+		#{exceptionMethod},
+		#{exceptionIndex}
+		)
+	</insert>
+	 
+	<select id="getCrash" parameterType="java.util.Map" resultType="com.ehr.model.CrashTraceV2DO">
+        SELECT
+        <include refid="crashTraceDetailV2Columns" />
+        FROM crashtracev2
+        <where>
+            id = #{id}
+        </where>        
+    </select>
+	
+</mapper>
