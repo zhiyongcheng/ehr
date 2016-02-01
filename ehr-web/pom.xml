@@ -15,11 +15,10 @@
   <url>http://maven.apache.org</url>
   <properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<spring.version>4.2.0.RELEASE</spring.version>
 		<jackson.version>2.5.0</jackson.version>
-	</properties>
+  </properties>
   <dependencies>
- <dependency>
+ 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.12</version>
@@ -27,120 +26,185 @@
 		</dependency>
 
 		<!-- spring -->
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-core</artifactId>
-			<version>${spring.version}</version>
-		</dependency>
+ 
 
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-beans</artifactId>
-			<version>${spring.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
-			<version>${spring.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-tx</artifactId>
-			<version>${spring.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-web</artifactId>
-			<version>${spring.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
-			<version>${spring.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-jdbc</artifactId>
-			<version>${spring.version}</version>
 		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
-			<version>${spring.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<!-- mybatis 包 -->
 		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis</artifactId>
-			<version>3.3.0</version>
 		</dependency>
 
 		<!--mybatis spring 插件 -->
 		<dependency>
 			<groupId>org.mybatis</groupId>
 			<artifactId>mybatis-spring</artifactId>
-			<version>1.2.3</version>
 		</dependency>
 		
 		<!-- mysql连接 -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
-			<version>5.1.36</version>
 		</dependency>
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>druid</artifactId>
-			<version>1.0.9</version>
 		</dependency>
 		<dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjweaver</artifactId>
-			<version>1.8.4</version>
 		</dependency>
-<!-- servlet -->
+        <!-- servlet -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
-			<version>3.0-alpha-1</version>
+			<scope>provided</scope>
 		</dependency>
 
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
-			<version>1.2</version>
 		</dependency>
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
-			<version>1.2.3</version>
 		</dependency>
 		
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			  <artifactId>commons-lang3</artifactId>
-			  <version>3.4</version>
 		</dependency>
 		  <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
-                <version>1.14.2</version>
             </dependency>
             
             <dependency>
-    <groupId>com.fasterxml.jackson.core</groupId>
-    <artifactId>jackson-databind</artifactId>
-    <version>2.6.0</version>
-</dependency>
+			    <groupId>com.fasterxml.jackson.core</groupId>
+			    <artifactId>jackson-databind</artifactId>
+			</dependency>
+
+		  <dependency>
+			  <groupId>org.slf4j</groupId>
+			  <artifactId>slf4j-api</artifactId>
+		  </dependency>
+		  <dependency>
+			  <groupId>ch.qos.logback</groupId>
+			  <artifactId>logback-core</artifactId>
+		  </dependency>
+		  <dependency>
+			  <groupId>ch.qos.logback</groupId>
+			  <artifactId>logback-classic</artifactId>
+		  </dependency>
+
   </dependencies>
+	<build>
+		<finalName>ehr-web</finalName>
+		<plugins>
+			<!-- Run the JUnit unit tests in an isolated classloader -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.4.2</version>
+				<configuration>
+					<skipTests>true</skipTests>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<port>8080</port>
+					<path>/</path>
+					<uriEncoding>UTF-8</uriEncoding>
+					<finalName>ehr-web</finalName>
+					<server>tomcat7</server>
+
+				</configuration>
+			</plugin>
+		</plugins>
+
+	</build>
+  <!--<profiles>
+  		<profile>
+  		    &lt;!&ndash; 开发环境 &ndash;&gt;
+  			<id>dev</id>
+  			<properties>
+  				<profiles.active>dev</profiles.active>  
+  			</properties>
+  			<activation>  
+            	<activeByDefault>true</activeByDefault>  
+            </activation>  
+  		</profile>
+        <profile>  
+	        &lt;!&ndash; 生产环境 &ndash;&gt;
+	        <id>saas</id>  
+	        <properties>  
+	            <profiles.active>saas</profiles.active>  
+	        </properties>  
+        </profile>  
+  </profiles>
+  
   <build>
     <finalName>ehr-web</finalName>
-  </build>
+    &lt;!&ndash; 配置资源文件的位置 &ndash;&gt;
+    <resources>
+    	<resource>
+    		<directory>src/main/resource</directory>
+    		<excludes>
+    			<exclude>conf-*</exclude>
+    		</excludes>
+    	</resource>
+    	<resource>
+    		<directory>src/main/resource/conf-${profiles.active}</directory>
+    	</resource>
+    	 
+    </resources>
+    <plugins>
+    	<plugin>
+      <groupId>org.eclipse.jetty</groupId>
+      <artifactId>jetty-maven-plugin</artifactId>
+      <version>9.2.8.v20150217</version>
+      <configuration>
+      	<webAppSourceDirectory>${basedir}/src/main/webapp</webAppSourceDirectory>
+      </configuration>
+    </plugin>
+    </plugins>
+  </build>-->
 </project>

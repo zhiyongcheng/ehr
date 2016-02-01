@@ -2,6 +2,7 @@ package com.ehr.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,18 +14,17 @@ import com.ehr.model.TestComplexView;
 import com.ehr.service.TestService;
 
 @Controller
+@Slf4j
 public class TestController {
 	@Autowired
 	public TestService testService;
 	@RequestMapping(value="/ehr/test.do",method=RequestMethod.GET)
 	public String testQuery(HttpServletRequest request,Long id ){
-		if(id==null){
-			request.setAttribute("test","id is null");
-			return "test";
-		}
+
 		CrashTraceV2DO crashTrace = testService.getCrash(id);
 		request.setAttribute("crashTrace",crashTrace);
 		request.setAttribute("test","helloworld");
+		log.info("TestController:{}","success");
 		//进入test.jsp
 		return "test";
 	}
