@@ -7,6 +7,12 @@
           <element id="module-output" name="ehr-web" />
         </element>
         <element id="directory" name="lib">
+          <element id="archive" name="ehr-common-0.0.1-SNAPSHOT.jar">
+            <element id="module-output" name="ehr-common" />
+          </element>
+          <element id="archive" name="ehr-core-0.0.1-SNAPSHOT.jar">
+            <element id="module-output" name="ehr-core" />
+          </element>
           <element id="library" level="project" name="Maven: org.springframework:spring-beans:4.2.0.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-core:4.2.0.RELEASE" />
           <element id="library" level="project" name="Maven: commons-logging:commons-logging:1.2" />

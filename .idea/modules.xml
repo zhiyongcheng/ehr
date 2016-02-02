@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ehr.iml" filepath="$PROJECT_DIR$/ehr.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ehr-common/ehr-common.iml" filepath="$PROJECT_DIR$/ehr-common/ehr-common.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ehr-core/ehr-core.iml" filepath="$PROJECT_DIR$/ehr-core/ehr-core.iml" />
       <module fileurl="file://$PROJECT_DIR$/ehr-web/ehr-web.iml" filepath="$PROJECT_DIR$/ehr-web/ehr-web.iml" />
     </modules>
   </component>

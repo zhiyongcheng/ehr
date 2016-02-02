@@ -20,11 +20,23 @@
    </properties>
   <modules>
     <module>ehr-web</module>
+    <module>ehr-common</module>
+    <module>ehr-core</module>
   </modules>
 
 	<!--将项目中所用到的jar包都在dependencyManagement里配置，子项目需要用哪个就dependency哪个，不用指定版本号，版本号会自动继承过去-->
   <dependencyManagement>
   	<dependencies>
+  	     <dependency>
+			<groupId>${project.groupId}</groupId>
+		    <artifactId>ehr-common</artifactId>
+		    <version>${project.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+		    <artifactId>ehr-core</artifactId>
+		    <version>${project.version}</version>
+		</dependency>
   		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>

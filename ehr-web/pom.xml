@@ -27,7 +27,14 @@
 
 		<!-- spring -->
  
-
+        <dependency>
+			<groupId>${project.groupId}</groupId>
+		    <artifactId>ehr-common</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+		    <artifactId>ehr-core</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-beans</artifactId>
