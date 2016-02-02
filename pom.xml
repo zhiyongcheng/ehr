@@ -176,4 +176,24 @@
 		</dependency>
   	</dependencies>
   </dependencyManagement>
+  <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.3</version>
+                    <configuration>
+                        <source>1.7</source>
+                        <target>1.7</target>
+                        <!--debug默认值是true，不可设置为false，否则会造成Spring设置Controller变量有问题
+                          请参考 http://blog.csdn.net/liuguanghaoputin/article/details/8695600 -->
+                        <debug>true</debug>
+                        <!-- verbose 参数为true会显示很多编译内部的信息,等价于编译参数-verbose -->
+                        <verbose>false</verbose>
+                        <!--<compilerArgs>-->
+                        <!--<arg>-g</arg>-->
+                        <!--<arg>-verbose</arg>-->
+                        <!--</compilerArgs>-->
+                    </configuration>
+                </plugin>
+    </plugins>
 </project>
