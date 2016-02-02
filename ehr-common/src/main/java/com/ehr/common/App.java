@@ -1,4 +1,4 @@
-package org.ehr.core;
+package com.ehr.common;
 
 /**
  * Hello world!

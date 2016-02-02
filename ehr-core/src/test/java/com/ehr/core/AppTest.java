@@ -1,4 +1,4 @@
-package org.ehr.core;
+package com.ehr.core;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
