@@ -1,7 +1,7 @@
 <component name="ArtifactManager">
   <artifact type="war" name="ehr-web:war">
     <output-path>$PROJECT_DIR$/ehr-web/target</output-path>
-    <root id="archive" name="ehr-web.war">
+    <root id="archive" name="ehr-web-0.0.1-SNAPSHOT.war">
       <element id="artifact" artifact-name="ehr-web:war exploded" />
     </root>
   </artifact>

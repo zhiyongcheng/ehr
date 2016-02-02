@@ -1,6 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="exploded-war" name="ehr-web:war exploded">
-    <output-path>$PROJECT_DIR$/ehr-web/target/ehr-web</output-path>
+    <output-path>$PROJECT_DIR$/ehr-web/target/ehr-web-0.0.1-SNAPSHOT</output-path>
     <root id="root">
       <element id="directory" name="WEB-INF">
         <element id="directory" name="classes">
