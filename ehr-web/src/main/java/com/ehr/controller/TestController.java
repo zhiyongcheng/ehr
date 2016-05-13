@@ -30,6 +30,8 @@ public class TestController {
 		log.info("TestController:{}","success");
 		//进入test.jsp
 		return "test";
+	
+	
 	}
 	@RequestMapping(value="/ehr/testGetComplexView.do",method=RequestMethod.GET)
 	@ResponseBody
