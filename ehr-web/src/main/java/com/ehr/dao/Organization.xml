@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ehr.dao.OrganizationDAO">
+
+	<sql id="selectColumns">
+		id,SITE_ID,PARENT_ID,NAME,ORG_CODE,OBJECT_TYPE,Register_Date,IS_ROOT,STATUS,CREATE_BY,CREATE_DATE,UPDATE_BY,UPDATE_DATE
+	</sql>
+	
+
+	<sql id="insertColumns">
+		SITE_ID,PARENT_ID,NAME,ORG_CODE,OBJECT_TYPE,Register_Date,IS_ROOT,STATUS,CREATE_BY,CREATE_DATE,UPDATE_BY,UPDATE_DATE
+	</sql>
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO organization (
+		<include refid="insertColumns" />
+		)
+		VALUES (
+		#{siteId},
+		#{parentId},
+		#{name},
+		#{orgCode},
+		#{objectType},
+		#{registerDate},
+		#{isRoot},
+		#{status},
+		#{createBy},
+		#{createDate},
+		#{updateBy},
+		#{updateDate}
+		 
+		)
+	</insert>
+	 
+	<select id="getOrganizationList" parameterType="java.util.Map" resultType="com.ehr.model.OrganizationDO">
+        SELECT
+        <include refid="selectColumns" />
+        FROM site
+        <where> 
+            <if test="id != null"> id = #{id}</if>
+            <if test="siteId != null"> and SITE_ID = #{siteId}</if>
+            <if test="parentId != null">and PARENT_ID = #{parentId}</if>
+            <if test="status != null"> and STATUS = #{status}</if>
+        </where>        
+    </select>
+    
+    <update id="update" parameterType="com.ehr.model.OrganizationDO">
+		UPDATE site
+		<set>
+			UPDATE_DATE = now(),UPDATE_BY=#{updateBy}
+			<if test="name != null"> , NAME = #{name} </if>
+			<if test="status != null"> , STATUS = #{status} </if>
+			<if test="customThemeId != null"> , CUSTOM_THEME_ID = #{customThemeId} </if>
+		</set>
+		WHERE id=#{id} 
+	</update>
+    
+</mapper>

@@ -7,5 +7,7 @@ public interface TestService {
 	public CrashTraceV2DO getCrash(long id);
 	public boolean insertCrash(CrashTraceV2DO trace);
 	public TestComplexView getTestComplexView();
+	public int createTable();
+	public String getTest();
 
 }

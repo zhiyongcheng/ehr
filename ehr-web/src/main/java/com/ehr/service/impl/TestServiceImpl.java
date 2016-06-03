@@ -36,4 +36,12 @@ public class TestServiceImpl implements TestService {
 		tv.setParam2("p2");
 		return tv;
     }
+    public int createTable(){
+    	int a = dao.createTable();
+    	System.out.println("###########a:");
+    	return a;
+    }
+    public String getTest(){
+    	return dao.getTest();
+    }
 }

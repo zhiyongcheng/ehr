@@ -2,8 +2,8 @@ package com.ehr.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
-import lombok.extern.slf4j.Slf4j;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +14,8 @@ import com.alibaba.fastjson.JSON;
 import com.ehr.model.CrashTraceV2DO;
 import com.ehr.model.TestComplexView;
 import com.ehr.service.TestService;
+
+
 @Slf4j
 @Controller
 public class TestController {
@@ -22,16 +24,28 @@ public class TestController {
 	@RequestMapping(value="/ehr/test.do",method=RequestMethod.GET)
 	public String testQuery(HttpServletRequest request,Long id ){
 
-		CrashTraceV2DO crashTrace = testService.getCrash(id);
+		 CrashTraceV2DO crashTrace = testService.getCrash(1);
 		TestComplexView tv = testService.getTestComplexView();
 		request.setAttribute("tv",tv);
-		request.setAttribute("crashTrace",crashTrace);
+		 request.setAttribute("crashTrace",crashTrace);
 		request.setAttribute("test","helloworld");
 		log.info("TestController:{}","success");
 		//进入test.jsp
 		return "test";
 	
 	
+	}
+	@RequestMapping(value="/ehr/create.do",method=RequestMethod.GET)
+	@ResponseBody
+	public String createTable(HttpServletRequest request){
+		int a = testService.createTable();
+		return "a:"+a;
+	}
+	@RequestMapping(value="/ehr/getTest.do",method=RequestMethod.GET)
+	@ResponseBody
+	public String getTest(HttpServletRequest request){
+		String a = testService.getTest();
+		return "a:"+a;
 	}
 	@RequestMapping(value="/ehr/testGetComplexView.do",method=RequestMethod.GET)
 	@ResponseBody

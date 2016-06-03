@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ehr.dao.CustomAttributeTableDAO">
+
+	<sql id="selectColumns">
+		id,SITE_ID,CATT_ID,CATT_CODE,NAME,NAME_EN,ATTRIBUTE_TABLE_NAME,CHANGE_FLAG,DISPLAY_ORDER,IS_SYSTEM_DEFAULT,CREATED_BY,CREATE_DATE,UPDATE_BY,UPDATE_DATE
+	</sql>
+
+	<sql id="insertColumns">
+		SITE_ID,CATT_ID,CATT_CODE,NAME,NAME_EN,ATTRIBUTE_TABLE_NAME,CHANGE_FLAG,DISPLAY_ORDER,IS_SYSTEM_DEFAULT,CREATED_BY,CREATE_DATE,UPDATE_BY,UPDATE_DATE
+	</sql>
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO custom_attribute_table (
+		<include refid="insertColumns" />
+		)
+		VALUES (
+		#{siteId},
+		#{cattId},
+		#{cattCode},
+		#{name},
+		#{nameEn},
+		#{attributeTableName},
+		#{changeFlag},
+		#{displayOrder},
+		#{isSystemDefault},
+		#{createdBy},
+		now(),
+		#{updateBy},
+		now()
+		 
+		)
+	</insert>
+
+	<insert id="batchInsert" parameterType="List">
+		INSERT INTO custom_attribute_table (
+		<include refid="insertColumns" />
+		)
+		VALUES
+		<foreach collection="dataList" item="table" index="index" separator=",">
+			(
+			#{table.siteId},
+			#{table.cattId},
+			#{table.cattCode},
+			#{table.name},
+			#{table.nameEn},
+			#{table.attributeTableName},
+			#{table.changeFlag},
+			#{table.displayOrder},
+			#{table.isSystemDefault},
+			#{table.createdBy},
+			now(),
+			#{table.updateBy},
+			now()
+			)
+		</foreach>
+	</insert>
+	<select id="getTableList" parameterType="java.util.Map" resultType="com.ehr.model.CustomAttributeTableDO">
+        SELECT
+        <include refid="selectColumns" />
+        FROM custom_attribute_table
+        <where> 
+            <if test="id != null"> id = #{id}</if>
+            <if test="siteId != null"> and SITE_ID = #{siteId}</if>
+            <if test="cattId != null"> and CATT_ID = #{cattId}</if>
+            <if test="changeFlag != null"> and CHANGE_FLAG = #{changeFlag}</if>
+        </where>        
+    </select>
+    
+    <update id="update" parameterType="com.ehr.model.CustomAttributeTableDO">
+		UPDATE custom_attribute_table_column
+		<set>
+			UPDATE_DATE = now(),UPDATE_BY=#{updateBy}
+			 
+			<if test="name != null"> , NAME = #{name} </if>
+			<if test="nameEn != null"> , NAME_EN = #{nameEn} </if>
+			<if test="displayOrder != null"> , DISPLAY_ORDER = #{displayOrder} </if>
+			<if test="attributeTableName != null"> , ATTRIBUTE_TABLE_NAME = #{attributeTableName} </if>
+		</set>
+		WHERE id=#{id} 
+	</update>
+    
+</mapper>

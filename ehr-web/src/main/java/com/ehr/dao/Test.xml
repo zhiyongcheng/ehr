@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ehr.dao.TestDAO">
-
 	<sql id="crashTraceDetailV2Columns">
 		id,crash_name,crash_name_id,cause,threads,activity_history,device_info,build_id,app_id,app_version_id,os_id,os_version_id,manufacturer_id,model_id,device_type_id,timestamp,device_id,running_apps
 		,exception_type,exception_file,exception_class,exception_method,exception_index
@@ -51,5 +50,17 @@
             id = #{id}
         </where>        
     </select>
+	<insert id="createTable" parameterType="string">
+	CREATE TABLE `test` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8
+	</insert>
 	
+	<select id="getTest"  resultType="string">
+        SELECT
+        name
+        FROM test
+    </select>
 </mapper>

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ehr.dao.CustomAttributeTableTypeDAO">
+
+	<sql id="selectColumns">
+		id,SITE_ID,NAME,NAME_EN,CATT_CODE,ATTRIBUTE_TABLE_PRE_NAME,CREATE_DATE
+	</sql>
+	
+
+	<sql id="insertColumns">
+		SITE_ID,NAME,NAME_EN,CATT_CODE,ATTRIBUTE_TABLE_PRE_NAME,CREATE_DATE
+	</sql>
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO custom_attribute_table_type (
+		<include refid="insertColumns" />
+		)
+		VALUES (
+		#{siteId},
+		#{name},
+		#{nameEn},
+		#{cattCode},
+		#{attributeTablePreName},
+		now()
+		)
+	</insert>
+	<insert id="batchInsert" parameterType="List">
+		INSERT INTO custom_attribute_table_type (
+		<include refid="insertColumns" />
+		)
+		VALUES
+		<foreach collection="dataList" item="tableType" index="index" separator=",">
+			(
+			#{tableType.siteId},
+			#{tableType.name},
+			#{tableType.nameEn},
+			#{tableType.cattCode},
+			#{tableType.attributeTablePreName},
+			now()
+			)
+		</foreach>
+	</insert>
+	<select id="getTableTypeList" parameterType="java.util.Map" resultType="com.ehr.model.CustomAttributeTableTypeDO">
+        SELECT
+        <include refid="selectColumns" />
+        FROM custom_attribute_table_type
+        <where> 
+            <if test="id != null"> id = #{id}</if>
+            <if test="siteId != null"> and SITE_ID = #{siteId}</if>
+            <if test="cattCode != null"> and CATT_CODE = #{cattCode}</if>
+        </where>        
+    </select>
+    
+    <update id="update" parameterType="com.ehr.model.CustomAttributeTableTypeDO">
+		UPDATE custom_attribute_table_type
+		<set>
+			<if test="name != null">  NAME = #{name} </if>
+			<if test="status != null"> , STATUS = #{status} </if>
+			<if test="nameEn != null"> , NAME_EN = #{nameEn} </if>
+			<if test="attributeTablePreName != null"> , ATTRIBUTE_TABLE_PRE_NAME = #{attributeTablePreName} </if>
+		</set>
+		WHERE id=#{id} 
+	</update>
+    
+    
+</mapper>

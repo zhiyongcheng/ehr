@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ehr.dao.CustomAttributeTableColumnDAO">
+
+	<sql id="selectColumns">
+		id,SITE_ID,COLUMN_NAME,CAT_ID,CAT_NAME,COLUMN_TYPE,COLUMN_DISPLAY,COLUMN_DISPLAY_EN,COLUMN_LENGTH,DECIMAL_PLACES,CATT_ID,DATE_TYPE,IS_REQUIRED,DISPLAY_ORDER,DESCRIPTIONS,IS_SHOW,CREATED_BY,CREATE_DATE,UPDATE_BY,UPDATE_DATE
+	</sql>
+	
+
+	<sql id="insertColumns">
+		SITE_ID,COLUMN_NAME,CAT_ID,CAT_NAME,COLUMN_TYPE,COLUMN_DISPLAY,COLUMN_DISPLAY_EN,COLUMN_LENGTH,DECIMAL_PLACES,CATT_ID,DATE_TYPE,IS_REQUIRED,DISPLAY_ORDER,DESCRIPTIONS,IS_SHOW,CREATED_BY,CREATE_DATE,UPDATE_BY,UPDATE_DATE
+	</sql>
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO custom_attribute_table_column (
+		<include refid="insertColumns" />
+		)
+		VALUES (
+		#{siteId},
+		#{columnName},
+		#{catId},
+		#{catName},
+		#{columnType},
+		#{columnDisplay},
+		#{columnDisplayEn},
+		#{columnLength},
+		#{decimalPlaces},
+		#{cattId},
+		#{dateType},
+		#{isRequired},
+		#{displayOrder},
+		#{descriptions},
+		#{isShow},
+		#{createBy},
+		#{createDate},
+		#{updateBy},
+		#{updateDate}
+		 
+		)
+	</insert>
+	<insert id="batchInsert" parameterType="List">
+		INSERT INTO custom_attribute_table_column (
+		<include refid="insertColumns" />
+		)
+		VALUES
+		<foreach collection="dataList" item="column" index="index" separator=",">
+			(
+			#{column.siteId},
+			#{column.columnName},
+			#{column.catId},
+			#{column.catName},
+			#{column.columnType},
+			#{column.columnDisplay},
+			#{column.columnDisplayEn},
+			#{column.columnLength},
+			#{column.decimalPlaces},
+			#{column.cattId},
+			#{column.dateType},
+			#{column.isRequired},
+			#{column.displayOrder},
+			#{column.descriptions},
+			#{column.isShow},
+			#{column.createdBy},
+			now(),
+			#{table.updateBy},
+			now()
+			)
+		</foreach>
+	</insert>
+	<select id="getTableColumnList" parameterType="java.util.Map" resultType="com.ehr.model.CustomAttributeTableColumnDO">
+        SELECT
+        <include refid="selectColumns" />
+        FROM custom_attribute_table_column
+        <where> 
+            <if test="id != null"> id = #{id}</if>
+            <if test="siteId != null"> and SITE_ID = #{siteId}</if>
+            <if test="catId != null"> and CAT_ID = #{catId}</if>
+            <if test="catName != null"> and CAT_NAME = #{catName}</if>
+            <if test="columnType != null"> and COLUMN_TYPE = #{columnType}</if>
+            <if test="isRequired != null"> and IS_REQUIRED = #{isRequired} </if>
+        </where>        
+    </select>
+    
+    <update id="update" parameterType="com.ehr.model.CustomAttributeTableColumnDO">
+		UPDATE custom_attribute_table_column
+		<set>
+			 UPDATE_DATE = now(),UPDATE_BY=#{updateBy}
+			<if test="columnDisplay != null"> , COLUMN_DISPLAY = #{columnDisplay} </if>
+			<if test="columnDisplayEn != null"> , COLUMN_DISPLAY_EN = #{columnDisplayEn} </if>
+			<if test="columnLength != null"> , COLUMN_LENGTH = #{columnLength} </if>
+			<if test="displayOrder != null"> , DISPLAY_ORDER = #{displayOrder} </if>
+			<if test="decimalPlaces != null"> , DECIMAL_PLACES = #{decimalPlaces} </if>
+			<if test="descriptions != null"> , DESCRIPTIONS = #{descriptions} </if>
+			<if test="isShow != null"> , IS_SHOW = #{isShow} </if>
+			<if test="isRequired != null"> , IS_REQUIRED = #{isRequired} </if>
+		
+		</set>
+		WHERE id=#{id} 
+	</update>
+    
+</mapper>

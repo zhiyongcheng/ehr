@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ehr.dao.EmployeeDAO">
+
+	<sql id="selectColumns">
+		id,SITE_ID,ORG_ID,NAME,POSITION_ID,USER_DATABASE_ID,USERCODE,ID_CARD_TYPE,ID_CARD,SEX,CREATE_BY,CREATE_DATE,UPDATE_BY,UPDATE_DATE
+	</sql>
+	
+
+	<sql id="insertColumns">
+		SITE_ID,ORG_ID,NAME,POSITION_ID,USER_DATABASE_ID,USERCODE,ID_CARD_TYPE,ID_CARD,SEX,CREATE_BY,CREATE_DATE,UPDATE_BY,UPDATE_DATE
+	</sql>
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO EMPLOYEE (
+		<include refid="insertColumns" />
+		)
+		VALUES (
+		#{siteId},
+		#{orgId},
+		#{name},
+		#{positionId},
+		#{userDatabaseId},
+		#{userCode},
+		#{idCardType},
+		#{idCard},
+		#{sex},
+		#{createBy},
+		#{createDate},
+		#{updateBy},
+		#{updateDate}
+		 
+		)
+	</insert>
+	 
+	<select id="getEmployeeList" parameterType="java.util.Map" resultType="com.ehr.model.EmployeeDO">
+        SELECT
+        <include refid="selectColumns" />
+        FROM EMPLOYEE
+        <where> 
+            <if test="id != null"> id = #{id}</if>
+            <if test="siteId != null"> and SITE_ID = #{siteId}</if>
+            <if test="orgId != null"> and ORG_ID = #{orgId}</if>
+            <if test="positionId != null"> and POSITION_ID = #{positionId} </if>
+        </where>        
+    </select>
+    
+    <update id="update" parameterType="com.ehr.model.EmployeeDO">
+		UPDATE EMPLOYEE
+		<set>
+			UPDATE_DATE = now(),UPDATE_BY=#{updateBy}
+			 <if test="siteId != null"> ,SITE_ID = #{siteId}</if>
+            <if test="orgId != null"> ,ORG_ID = #{orgId}</if>
+			<if test="positionId != null"> , POSITION_ID = #{positionId} </if>
+		</set>
+		WHERE id=#{id} 
+	</update>
+    
+</mapper>
