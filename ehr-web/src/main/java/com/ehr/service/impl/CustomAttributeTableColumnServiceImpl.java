@@ -1,6 +1,7 @@
 package com.ehr.service.impl;
 
 import com.ehr.dao.CustomAttributeTableColumnDAO;
+import com.ehr.dao.CustomAttributeTableColumnDAO;
 import com.ehr.model.CustomAttributeTableColumnDO;
 import com.ehr.service.CustomAttributeTableColumnService;
 import lombok.extern.slf4j.Slf4j;

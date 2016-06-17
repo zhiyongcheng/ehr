@@ -12,8 +12,8 @@ public class SiteDO {
     private String status;
     private String siteType;
     private int customThemeId;
-    private int createBy;
+    private int createdBy;
     private Date createDate;
-    private int updateBy;
-    private Date updateDate;
+    private int lastUpdatedBy;
+    private Date lastUpdateDate;
 }

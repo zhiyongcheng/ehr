@@ -1,5 +1,6 @@
 package com.ehr.service.impl;
 
+import com.ehr.model.CustomAttributeCodeDO;
 import com.ehr.dao.CustomAttributeCodeDAO;
 import com.ehr.model.CustomAttributeCodeDO;
 import com.ehr.service.CustomAttributeCodeService;

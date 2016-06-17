@@ -4,7 +4,7 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	version="3.0" metadata-complete="false">
   <display-name>Archetype Created Web Application</display-name>
-  
+
   <context-param>
 		<param-name>webAppRootKey</param-name>
 		<param-value>webapp.root</param-value>
@@ -17,6 +17,10 @@
 		<param-name>logbackConfigLocation</param-name>
 		<param-value>/WEB-INF/classes/logback.xml</param-value>
 	</context-param>
+
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
 	<jsp-config>
 		<jsp-property-group>
 			<url-pattern>*.htm</url-pattern>
@@ -44,11 +48,8 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
-    <listener>  
-        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>  
-    </listener>  
   <servlet>
-		<servlet-name>spring</servlet-name>
+		<servlet-name>springMVC</servlet-name>
 		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
 		<init-param>
 			<param-name>contextConfigLocation</param-name>
@@ -60,7 +61,11 @@
 		<async-supported>true</async-supported><!-- 支持异步请求 -->
 	</servlet>
 	<servlet-mapping>
-		<servlet-name>spring</servlet-name>
-		<url-pattern>/</url-pattern>
+		<servlet-name>springMVC</servlet-name>
+		<url-pattern>*.do</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>springMVC</servlet-name>
+		<url-pattern>*.htm</url-pattern>
 	</servlet-mapping>
 </web-app>

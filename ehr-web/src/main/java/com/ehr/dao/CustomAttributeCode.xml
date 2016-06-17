@@ -3,12 +3,12 @@
 <mapper namespace="com.ehr.dao.CustomAttributeCodeDAO">
 
 	<sql id="selectColumns">
-		id,SITE_ID,CODE_NAME,CODE_NAME_EN,IS_ GENERAL,MAX_LENGTH,IS_SHOW,CREATE_BY,CREATE_DATE,UPDATE_BY,UPDATE_DATE
+		id,SITE_ID,CODE_NAME,CODE_NAME_EN,IS_ GENERAL,MAX_LENGTH,IS_SHOW,CREATED_BY,CREATE_DATE,LAST_UPDATED_BY,LAST_UPDATE_DATE
 	</sql>
 	
 
 	<sql id="insertColumns">
-		SITE_ID,CODE_NAME,CODE_NAME_EN,IS_ GENERAL,MAX_LENGTH,IS_SHOW,CREATE_BY,CREATE_DATE,UPDATE_BY,UPDATE_DATE
+		SITE_ID,CODE_NAME,CODE_NAME_EN,IS_ GENERAL,MAX_LENGTH,IS_SHOW,CREATED_BY,CREATE_DATE,LAST_UPDATED_BY,LAST_UPDATE_DATE
 	</sql>
 
 	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
@@ -22,10 +22,10 @@
 		#{isGeneral},
 		#{maxLength},
 		#{isShow},
-		#{createBy},
-		#{createDate},
-		#{updateBy},
-		#{updateDate}
+		#{createdBy},
+		now(),
+		#{lastUpdatedBy},
+		now()
 		 
 		)
 	</insert>
@@ -45,7 +45,7 @@
     <update id="update" parameterType="com.ehr.model.CustomAttributeCodeDO">
 		UPDATE custom_attribute_code
 		<set>
-			UPDATE_DATE = now(),UPDATE_BY=#{updateBy}
+			LAST_UPDATE_DATE = now(),LAST_UPDATED_BY=#{lastUpdatedBy}
 			<if test="name != null"> , CODE_NAME = #{name} </if>
 			<if test="status != null"> , CODE_NAME_EN = #{status} </if>
 			<if test="customThemeId != null"> , IS_SHOW = #{customThemeId} </if>

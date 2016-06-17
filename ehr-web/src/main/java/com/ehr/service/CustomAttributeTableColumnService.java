@@ -2,6 +2,7 @@ package com.ehr.service;
 
 import com.ehr.model.CustomAttributeTableColumnDO;
 import com.ehr.model.CustomAttributeTableTypeDO;
+import com.ehr.model.CustomAttributeTableColumnDO;
 
 import java.util.List;
 

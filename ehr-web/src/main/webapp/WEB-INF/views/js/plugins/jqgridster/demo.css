@@ -1,0 +1,24 @@
+.gridster * {
+	margin: 0px; padding: 0px;
+}
+.controls {
+	margin-bottom: 20px;
+}
+.gridster ul {
+	background-color:lightskyblue;
+}
+.gridster li {
+	text-align: center; line-height: 100%; font-size: 1em; font-weight: bold;
+}
+.gridster {
+	margin: 0px auto; opacity: 0.8; -webkit-transition: opacity .6s; -moz-transition: opacity .6s; -o-transition: opacity .6s; -ms-transition: opacity .6s; transition: opacity .6s;
+}
+.gridster .gs-w {
+	background: rgb(221, 221, 221); cursor: pointer;
+}
+.gridster .player {
+	background: rgb(187, 187, 187);
+}
+.gridster .preview-holder {
+	background: red !important; border: currentColor !important;
+}

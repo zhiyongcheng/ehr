@@ -1,6 +1,7 @@
 package com.ehr.dao;
 
 import com.ehr.model.CustomAttributeCodeDO;
+import com.ehr.model.CustomAttributeCodeDO;
 import com.ehr.model.SiteDO;
 
 import java.util.List;

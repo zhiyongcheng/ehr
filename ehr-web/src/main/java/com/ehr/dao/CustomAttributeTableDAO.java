@@ -2,6 +2,9 @@ package com.ehr.dao;
  
 import java.util.List;
 import java.util.Map;
+
+import com.ehr.model.CustomAttributeTableDO;
+import com.ehr.model.CustomAttributeTableDO;
 import com.ehr.model.CustomAttributeTableDO;
 import org.apache.ibatis.annotations.Param;
 

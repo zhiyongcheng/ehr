@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.ehr.model.PositionDO;
+import com.ehr.model.PositionDO;
+import com.ehr.model.PositionDO;
 
 public interface PositionDAO {
 	

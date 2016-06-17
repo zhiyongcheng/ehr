@@ -3,12 +3,12 @@
 <mapper namespace="com.ehr.dao.OrganizationDAO">
 
 	<sql id="selectColumns">
-		id,SITE_ID,PARENT_ID,NAME,ORG_CODE,OBJECT_TYPE,Register_Date,IS_ROOT,STATUS,CREATE_BY,CREATE_DATE,UPDATE_BY,UPDATE_DATE
+		id,SITE_ID,PARENT_ID,NAME,ORG_CODE,OBJECT_TYPE,Register_Date,IS_ROOT,STATUS,CREATED_BY,CREATE_DATE,LAST_UPDATED_BY,LAST_UPDATE_DATE
 	</sql>
 	
 
 	<sql id="insertColumns">
-		SITE_ID,PARENT_ID,NAME,ORG_CODE,OBJECT_TYPE,Register_Date,IS_ROOT,STATUS,CREATE_BY,CREATE_DATE,UPDATE_BY,UPDATE_DATE
+		SITE_ID,PARENT_ID,NAME,ORG_CODE,OBJECT_TYPE,Register_Date,IS_ROOT,STATUS,CREATED_BY,CREATE_DATE,LAST_UPDATED_BY,LAST_UPDATE_DATE
 	</sql>
 
 	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
@@ -24,10 +24,10 @@
 		#{registerDate},
 		#{isRoot},
 		#{status},
-		#{createBy},
-		#{createDate},
-		#{updateBy},
-		#{updateDate}
+		#{createdBy},
+		now(),
+		#{lastUpdatedBy},
+		now()
 		 
 		)
 	</insert>
@@ -35,19 +35,35 @@
 	<select id="getOrganizationList" parameterType="java.util.Map" resultType="com.ehr.model.OrganizationDO">
         SELECT
         <include refid="selectColumns" />
-        FROM site
+        FROM organization
         <where> 
             <if test="id != null"> id = #{id}</if>
             <if test="siteId != null"> and SITE_ID = #{siteId}</if>
             <if test="parentId != null">and PARENT_ID = #{parentId}</if>
             <if test="status != null"> and STATUS = #{status}</if>
-        </where>        
+        </where>
+		<if test="orderStr != null">
+			${orderStr}
+		</if>
+		<if test="offset != null and limit != null">
+			limit ${offset},${limit}
+		</if>
     </select>
-    
+	<select id="getOrgCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+		SELECT
+		count(*)
+		FROM organization
+		<where>
+			<if test="id != null"> id = #{id}</if>
+			<if test="siteId != null"> and SITE_ID = #{siteId}</if>
+			<if test="parentId != null">and PARENT_ID = #{parentId}</if>
+			<if test="status != null"> and STATUS = #{status}</if>
+		</where>
+	</select>
     <update id="update" parameterType="com.ehr.model.OrganizationDO">
 		UPDATE site
 		<set>
-			UPDATE_DATE = now(),UPDATE_BY=#{updateBy}
+			LAST_UPDATE_DATE = now(),LAST_UPDATED_BY=#{lastUpdatedBy}
 			<if test="name != null"> , NAME = #{name} </if>
 			<if test="status != null"> , STATUS = #{status} </if>
 			<if test="customThemeId != null"> , CUSTOM_THEME_ID = #{customThemeId} </if>

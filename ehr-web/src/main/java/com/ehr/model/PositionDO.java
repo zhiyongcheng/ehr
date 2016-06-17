@@ -11,8 +11,8 @@ public class PositionDO {
 	private String name;
 	private String positionCode;
 	private String status;
-	private int createBy;
+	private int createdBy;
 	private Date createDate;
-	private int updateBy;
-	private Date updateDate;
+	private int lastUpdatedBy;
+	private Date lastUpdateDate;
 }

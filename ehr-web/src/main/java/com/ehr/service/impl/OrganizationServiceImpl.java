@@ -1,6 +1,8 @@
 package com.ehr.service.impl;
 
 import com.ehr.dao.OrganizationDAO;
+import com.ehr.service.OrganizationService;
+import com.ehr.dao.OrganizationDAO;
 import com.ehr.model.OrganizationDO;
 import com.ehr.service.OrganizationService;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +17,7 @@ import java.util.Map;
 @Slf4j
 @Service
 public class OrganizationServiceImpl implements OrganizationService {
+    @Autowired
     public OrganizationDAO dao;
     @Override
     public boolean insert(OrganizationDO position) {
@@ -27,7 +30,9 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     @Override
-    public List<OrganizationDO> getOrganizationList(Integer id, Integer siteId, Integer parentId, Integer status) {
+    public List<OrganizationDO> getOrganizationList(Integer id, Integer siteId, Integer parentId,
+                                                    Integer status,String orderStr,Integer offset,
+                                                    Integer limit){
         Map<String, Object> map = new HashMap();
         if(null != id && id > 0){
             map.put("id", id);
@@ -41,7 +46,31 @@ public class OrganizationServiceImpl implements OrganizationService {
         if(null != status){
             map.put("status", status);
         }
+        if(StringUtils.isNoneBlank(orderStr)){
+            map.put("orderStr", orderStr);
+        }
+        if(null != offset){
+            map.put("offset", offset);
+        }
+        if(null != limit && limit>0){
+            map.put("limit", limit);
+        }
         return dao.getOrganizationList(map);
+    }
+
+    @Override
+    public int getOrgCount(Integer siteId, Integer parentId, Integer status) {
+        Map<String, Object> map = new HashMap();
+        if(null != siteId){
+            map.put("siteId", siteId);
+        }
+        if(null != parentId){
+            map.put("parentId", parentId);
+        }
+        if(null != status){
+            map.put("status", status);
+        }
+        return dao.getOrgCount(map);
     }
 
     @Override

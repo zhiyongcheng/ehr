@@ -13,11 +13,13 @@ public class CustomAttributeTableDO {
     private String name;
     private String nameEn;
     private String attributeTableName;
-    private String changeflag;
+    private String changeFlag;
     private int displayOrder;
     private String isSystemDefault;
-    private int createBy;
+    private int createdBy;
     private Date createDate;
-    private int updateBy;
-    private Date updateDate;
+    private int lastUpdatedBy;
+    private Date lastUpdateDate;
+    //系统默认初始化表id System_init_info中parentId大于0的id
+    private int subSysInitSinfoId;
 }

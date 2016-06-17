@@ -12,9 +12,10 @@ public class CustomAttributeTableTypeDO {
     private String nameEn;
     private String cattCode;
     private String attributeTablePreName;
-    private Date createDate;
+    private Date createdDate;
     public void combineTablePreName(){
-        attributeTablePreName =  new StringBuffer(cattCode).append("_INFO")
-                                                           .append(siteId).toString();
+        attributeTablePreName =  new StringBuffer(cattCode)
+                                        .append("_INFO_")
+                                        .append(siteId).toString();
     }
 }

@@ -4,8 +4,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-${test}
-<br>
-${tv.param1 }
+${msg}
 </body>
 </html>

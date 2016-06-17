@@ -3,12 +3,12 @@
 <mapper namespace="com.ehr.dao.EmployeeDAO">
 
 	<sql id="selectColumns">
-		id,SITE_ID,ORG_ID,NAME,POSITION_ID,USER_DATABASE_ID,USERCODE,ID_CARD_TYPE,ID_CARD,SEX,CREATE_BY,CREATE_DATE,UPDATE_BY,UPDATE_DATE
+		id,SITE_ID,ORG_ID,NAME,POSITION_ID,USER_DATABASE_ID,USERCODE,ID_CARD_TYPE,ID_CARD,SEX,CREATED_BY,CREATE_DATE,LAST_UPDATED_BY,LAST_UPDATE_DATE
 	</sql>
 	
 
 	<sql id="insertColumns">
-		SITE_ID,ORG_ID,NAME,POSITION_ID,USER_DATABASE_ID,USERCODE,ID_CARD_TYPE,ID_CARD,SEX,CREATE_BY,CREATE_DATE,UPDATE_BY,UPDATE_DATE
+		SITE_ID,ORG_ID,NAME,POSITION_ID,USER_DATABASE_ID,USERCODE,ID_CARD_TYPE,ID_CARD,SEX,CREATED_BY,CREATE_DATE,LAST_UPDATED_BY,LAST_UPDATE_DATE
 	</sql>
 
 	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
@@ -25,10 +25,10 @@
 		#{idCardType},
 		#{idCard},
 		#{sex},
-		#{createBy},
-		#{createDate},
-		#{updateBy},
-		#{updateDate}
+		#{createdBy},
+		now(),
+		#{lastUpdatedBy},
+		now()
 		 
 		)
 	</insert>
@@ -48,7 +48,7 @@
     <update id="update" parameterType="com.ehr.model.EmployeeDO">
 		UPDATE EMPLOYEE
 		<set>
-			UPDATE_DATE = now(),UPDATE_BY=#{updateBy}
+			LAST_UPDATE_DATE = now(),LAST_UPDATED_BY=#{lastUpdatedBy}
 			 <if test="siteId != null"> ,SITE_ID = #{siteId}</if>
             <if test="orgId != null"> ,ORG_ID = #{orgId}</if>
 			<if test="positionId != null"> , POSITION_ID = #{positionId} </if>

@@ -10,8 +10,8 @@ public class CustomAttributeCodeValueDO {
     private int codeId;
     private String codeValue;
     private String codeValueEn;
-    private int createBy;
+    private int createdBy;
     private Date createDate;
-    private int updateBy;
-    private Date updateDate;
+    private int lastUpdatedBy;
+    private Date lastUpdateDate;
 }

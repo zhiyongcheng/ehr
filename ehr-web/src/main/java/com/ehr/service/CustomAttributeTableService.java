@@ -1,6 +1,8 @@
 package com.ehr.service;
 
+import com.ehr.model.CustomAttributeTableDO;
 import com.ehr.model.CustomAttributeCodeDO;
+import com.ehr.model.CustomAttributeTableDO;
 import com.ehr.model.CustomAttributeTableDO;
 
 import java.util.List;

@@ -1,6 +1,8 @@
 package com.ehr.model;
 
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Date;
 
@@ -13,8 +15,8 @@ public class CustomAttributeCodeDO {
     private String isGeneral;
     private String maxLength;
     private int isShow;
-    private int createBy;
+    private int createdBy;
     private Date createDate;
-    private int updateBy;
-    private Date updateDate;
+    private int lastUpdatedBy;
+    private Date lastUpdateDate;
 }

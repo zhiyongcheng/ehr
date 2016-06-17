@@ -3,12 +3,12 @@
 <mapper namespace="com.ehr.dao.PositionDAO">
 
 	<sql id="selectColumns">
-		id,SITE_ID,ORG_ID,NAME,POSITION_CODE,STATUS,CREATE_BY,CREATE_DATE,UPDATE_BY,UPDATE_DATE
+		id,SITE_ID,ORG_ID,NAME,POSITION_CODE,STATUS,CREATED_BY,CREATE_DATE,LAST_UPDATED_BY,LAST_UPDATE_DATE
 	</sql>
 	
 
 	<sql id="insertColumns">
-		SITE_ID,ORG_ID,NAME,POSITION_CODE,STATUS,CREATE_BY,CREATE_DATE,UPDATE_BY,UPDATE_DATE
+		SITE_ID,ORG_ID,NAME,POSITION_CODE,STATUS,CREATED_BY,CREATE_DATE,LAST_UPDATED_BY,LAST_UPDATE_DATE
 	</sql>
 
 	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
@@ -22,9 +22,9 @@
 		#{positionCode},
 		#{status},
 		#{createdBy},
-		#{createDate},
+		now(),
 		#{lastUpdateBy},
-		#{lastUpdateDate}
+		now()
 		 
 		)
 	</insert>
@@ -44,7 +44,7 @@
     <update id="update" parameterType="com.ehr.model.PositionDO">
 		UPDATE POSITION
 		<set>
-			UPDATE_DATE = now(),UPDATE_BY=#{updateBy}
+			LAST_UPDATE_DATE = now(),LAST_UPDATED_BY=#{updateBy}
 			 <if test="siteId != null"> ,SITE_ID = #{siteId}</if>
             <if test="orgId != null"> ,ORG_ID = #{orgId}</if>
             <if test="status != null"> ,STATUS = #{status}</if>

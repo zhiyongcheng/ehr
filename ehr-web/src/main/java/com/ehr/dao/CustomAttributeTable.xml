@@ -3,11 +3,11 @@
 <mapper namespace="com.ehr.dao.CustomAttributeTableDAO">
 
 	<sql id="selectColumns">
-		id,SITE_ID,CATT_ID,CATT_CODE,NAME,NAME_EN,ATTRIBUTE_TABLE_NAME,CHANGE_FLAG,DISPLAY_ORDER,IS_SYSTEM_DEFAULT,CREATED_BY,CREATE_DATE,UPDATE_BY,UPDATE_DATE
+		id,SITE_ID,CATT_ID,CATT_CODE,NAME,NAME_EN,ATTRIBUTE_TABLE_NAME,CHANGE_FLAG,DISPLAY_ORDER,IS_SYSTEM_DEFAULT,CREATED_BY,CREATE_DATE,LAST_UPDATED_BY,LAST_UPDATE_DATE
 	</sql>
 
 	<sql id="insertColumns">
-		SITE_ID,CATT_ID,CATT_CODE,NAME,NAME_EN,ATTRIBUTE_TABLE_NAME,CHANGE_FLAG,DISPLAY_ORDER,IS_SYSTEM_DEFAULT,CREATED_BY,CREATE_DATE,UPDATE_BY,UPDATE_DATE
+		SITE_ID,CATT_ID,CATT_CODE,NAME,NAME_EN,ATTRIBUTE_TABLE_NAME,CHANGE_FLAG,DISPLAY_ORDER,IS_SYSTEM_DEFAULT,CREATED_BY,CREATE_DATE,LAST_UPDATED_BY,LAST_UPDATE_DATE
 	</sql>
 
 	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
@@ -26,7 +26,7 @@
 		#{isSystemDefault},
 		#{createdBy},
 		now(),
-		#{updateBy},
+		#{lastUpdatedBy},
 		now()
 		 
 		)
@@ -50,7 +50,7 @@
 			#{table.isSystemDefault},
 			#{table.createdBy},
 			now(),
-			#{table.updateBy},
+			#{table.lastUpdatedBy},
 			now()
 			)
 		</foreach>
@@ -70,7 +70,7 @@
     <update id="update" parameterType="com.ehr.model.CustomAttributeTableDO">
 		UPDATE custom_attribute_table_column
 		<set>
-			UPDATE_DATE = now(),UPDATE_BY=#{updateBy}
+			LAST_UPDATE_DATE = now(),LAST_UPDATED_BY=#{lastUpdatedBy}
 			 
 			<if test="name != null"> , NAME = #{name} </if>
 			<if test="nameEn != null"> , NAME_EN = #{nameEn} </if>

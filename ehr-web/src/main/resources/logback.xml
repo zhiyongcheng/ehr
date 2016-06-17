@@ -48,6 +48,9 @@
 		<appender-ref ref="main"/>
 	</logger>
 -->
+	<logger name="com.ehr.dao.CustomAttributeTableDAO" level="INFO" additivity="false">
+		<appender-ref ref="STDOUT"/>
+	</logger>
 	<!--不特殊指定某个类的时候 所有日志都写入ehr.log文件-->
 	<root level="INFO">
 		<appender-ref ref="main" />

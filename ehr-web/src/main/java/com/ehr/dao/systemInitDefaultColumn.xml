@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ehr.dao.SystemInitDefaultColumnDAO">
+
+	<sql id="selectColumns">
+		id,SUB_SYSTEM_INFO_ID,COLUMN_NAME,COLUMN_TYPE,COLUMN_DISPLAY,COLUMN_DISPLAY_EN,COLUMN_LENGTH,DECIMAL_PLACES,CUSTOM_ATTRIBUTE_CODE_ID,DATE_TYPE,IS_REQUIRED,DISPLAY_ORDER,DESCRIPTIONS,IS_SHOW,CREATED_BY,CREATE_DATE,LAST_UPDATED_BY,LAST_UPDATE_DATE
+	</sql>
+	
+
+	<sql id="insertColumns">
+		SUB_SYSTEM_INFO_ID,COLUMN_NAME,COLUMN_TYPE,COLUMN_DISPLAY,COLUMN_DISPLAY_EN,COLUMN_LENGTH,DECIMAL_PLACES,CUSTOM_ATTRIBUTE_CODE_ID,DATE_TYPE,IS_REQUIRED,DISPLAY_ORDER,DESCRIPTIONS,IS_SHOW,CREATED_BY,CREATE_DATE,LAST_UPDATED_BY,LAST_UPDATE_DATE
+	</sql>
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO system_init_default_column (
+		<include refid="insertColumns" />
+		)
+		VALUES (
+		#{subSystemInfoId},
+		#{columnName},
+		#{columnType},
+		#{columnDisplay},
+		#{columnDisplayEn},
+		#{columnLength},
+		#{decimalPlaces},
+		#{customAttributeCodeId},
+		#{dateType},
+		#{isRequired},
+		#{displayOrder},
+		#{descriptions},
+		#{isShow},
+		#{createdBy},
+		now(),
+		#{lastUpdatedBy},
+		now()
+		)
+	</insert>
+
+	<select id="getDefaultColumnList"  resultType="com.ehr.model.CustomAttributeTableColumnDO">
+        SELECT
+        <include refid="selectColumns" />
+        FROM system_init_default_column
+        <where> 
+            <if test="id != null"> id = #{id}</if>
+            <if test="subSystemInfoId != null"> and SUB_SYSTEM_INFO_ID = #{subSystemInfoId}</if>
+            <if test="columnType != null"> and COLUMN_TYPE = #{columnType}</if>
+            <if test="isRequired != null"> and IS_REQUIRED = #{isRequired} </if>
+        </where>        
+    </select>
+	<select id="getDefaultTableAndColumnList"  resultType="com.ehr.model.CustomAttributeTableColumnDO">
+	     select p.type_code as parent_type_code,s.type_code,c.COLUMN_NAME,
+            c.COLUMN_DISPLAY,c.COLUMN_DISPLAY_EN,c.COLUMN_LENGTH,c.COLUMN_TYPE,
+            c.CUSTOM_ATTRIBUTE_CODE_ID,c.DATE_TYPE,c.DECIMAL_PLACES,c.DESCRIPTIONS,
+            c.IS_REQUIRED,c.IS_SHOW,c.SUB_SYSTEM_INFO_ID
+		 from
+             (select id,type_code from system_init_info where parent_id=0) p,
+             system_init_info s,
+             system_init_default_column c
+         where p.id=s.parent_id AND s.id=c.SUB_SYSTEM_INFO_ID
+	</select>
+    <update id="update" parameterType="com.ehr.model.CustomAttributeTableColumnDO">
+		UPDATE system_init_default_column
+		<set>
+			 LAST_UPDATE_DATE = now(),LAST_UPDATED_BY=#{lastUpdatedBy}
+			<if test="columnDisplay != null"> , COLUMN_DISPLAY = #{columnDisplay} </if>
+			<if test="columnDisplayEn != null"> , COLUMN_DISPLAY_EN = #{columnDisplayEn} </if>
+			<if test="columnLength != null"> , COLUMN_LENGTH = #{columnLength} </if>
+			<if test="displayOrder != null"> , DISPLAY_ORDER = #{displayOrder} </if>
+			<if test="decimalPlaces != null"> , DECIMAL_PLACES = #{decimalPlaces} </if>
+			<if test="descriptions != null"> , DESCRIPTIONS = #{descriptions} </if>
+			<if test="isShow != null"> , IS_SHOW = #{isShow} </if>
+			<if test="isRequired != null"> , IS_REQUIRED = #{isRequired} </if>
+		</set>
+		WHERE id=#{id} 
+	</update>
+    
+</mapper>

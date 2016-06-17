@@ -3,12 +3,12 @@
 <mapper namespace="com.ehr.dao.CustomAttributeTableColumnDAO">
 
 	<sql id="selectColumns">
-		id,SITE_ID,COLUMN_NAME,CAT_ID,CAT_NAME,COLUMN_TYPE,COLUMN_DISPLAY,COLUMN_DISPLAY_EN,COLUMN_LENGTH,DECIMAL_PLACES,CATT_ID,DATE_TYPE,IS_REQUIRED,DISPLAY_ORDER,DESCRIPTIONS,IS_SHOW,CREATED_BY,CREATE_DATE,UPDATE_BY,UPDATE_DATE
+		id,SITE_ID,COLUMN_NAME,CAT_ID,CAT_NAME,COLUMN_TYPE,COLUMN_DISPLAY,COLUMN_DISPLAY_EN,COLUMN_LENGTH,DECIMAL_PLACES,CUSTOM_ATTRIBUTE_CODE_ID,DATE_TYPE,IS_REQUIRED,DISPLAY_ORDER,DESCRIPTIONS,IS_SHOW,CREATED_BY,CREATE_DATE,LAST_UPDATED_BY,LAST_UPDATE_DATE
 	</sql>
 	
 
 	<sql id="insertColumns">
-		SITE_ID,COLUMN_NAME,CAT_ID,CAT_NAME,COLUMN_TYPE,COLUMN_DISPLAY,COLUMN_DISPLAY_EN,COLUMN_LENGTH,DECIMAL_PLACES,CATT_ID,DATE_TYPE,IS_REQUIRED,DISPLAY_ORDER,DESCRIPTIONS,IS_SHOW,CREATED_BY,CREATE_DATE,UPDATE_BY,UPDATE_DATE
+		SITE_ID,COLUMN_NAME,CAT_ID,CAT_NAME,COLUMN_TYPE,COLUMN_DISPLAY,COLUMN_DISPLAY_EN,COLUMN_LENGTH,DECIMAL_PLACES,CUSTOM_ATTRIBUTE_CODE_ID,DATE_TYPE,IS_REQUIRED,DISPLAY_ORDER,DESCRIPTIONS,IS_SHOW,CREATED_BY,CREATE_DATE,LAST_UPDATED_BY,LAST_UPDATE_DATE
 	</sql>
 
 	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
@@ -25,25 +25,25 @@
 		#{columnDisplayEn},
 		#{columnLength},
 		#{decimalPlaces},
-		#{cattId},
+		#{customAttributeCodeId},
 		#{dateType},
 		#{isRequired},
 		#{displayOrder},
 		#{descriptions},
 		#{isShow},
-		#{createBy},
-		#{createDate},
-		#{updateBy},
-		#{updateDate}
+		#{createdBy},
+		now(),
+		#{lastUpdatedBy},
+		now()
 		 
 		)
 	</insert>
-	<insert id="batchInsert" parameterType="List">
+	<insert id="batchInsert" parameterType="java.util.List">
 		INSERT INTO custom_attribute_table_column (
 		<include refid="insertColumns" />
 		)
 		VALUES
-		<foreach collection="dataList" item="column" index="index" separator=",">
+		<foreach collection="list" item="column" index="index" separator=",">
 			(
 			#{column.siteId},
 			#{column.columnName},
@@ -54,7 +54,7 @@
 			#{column.columnDisplayEn},
 			#{column.columnLength},
 			#{column.decimalPlaces},
-			#{column.cattId},
+			#{column.customAttributeCodeId},
 			#{column.dateType},
 			#{column.isRequired},
 			#{column.displayOrder},
@@ -62,7 +62,7 @@
 			#{column.isShow},
 			#{column.createdBy},
 			now(),
-			#{table.updateBy},
+			#{column.lastUpdatedBy},
 			now()
 			)
 		</foreach>
@@ -84,7 +84,7 @@
     <update id="update" parameterType="com.ehr.model.CustomAttributeTableColumnDO">
 		UPDATE custom_attribute_table_column
 		<set>
-			 UPDATE_DATE = now(),UPDATE_BY=#{updateBy}
+			 LAST_UPDATE_DATE = now(),LAST_UPDATED_BY=#{lastUpdatedBy}
 			<if test="columnDisplay != null"> , COLUMN_DISPLAY = #{columnDisplay} </if>
 			<if test="columnDisplayEn != null"> , COLUMN_DISPLAY_EN = #{columnDisplayEn} </if>
 			<if test="columnLength != null"> , COLUMN_LENGTH = #{columnLength} </if>

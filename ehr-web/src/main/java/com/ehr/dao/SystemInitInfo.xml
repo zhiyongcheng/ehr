@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ehr.dao.SystemInitInfoDAO">
+
+	<sql id="selectColumns">
+		id,PARENT_ID,type_code,type_name,type_name_en,status,CREATED_BY,CREATE_DATE,LAST_UPDATED_BY,LAST_UPDATE_DATE
+	</sql>
+	
+
+	<sql id="insertColumns">
+		PARENT_ID,type_code,type_name,type_name_en,status,CREATED_BY,CREATE_DATE,LAST_UPDATED_BY,LAST_UPDATE_DATE
+	</sql>
+
+	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO System_init_info (
+		<include refid="insertColumns" />
+		)
+		VALUES (
+		#{parentId},
+		#{typeCode},
+		#{typeName},
+		#{typeNameEn},
+		#{status},
+		#{createdBy},
+		now(),
+		#{lastUpdatedBy},
+		now()
+		 
+		)
+	</insert>
+	 
+	<select id="getSystemInitInfoList" parameterType="java.util.Map" resultType="com.ehr.model.SystemInitInfoDO">
+        SELECT
+        <include refid="selectColumns" />
+        FROM System_init_info
+        <where>
+            <if test="id != null"> id = #{id}</if>
+            <if test="parentId != null"> and PARENT_ID = #{parentId}</if>
+			<if test="subSystemInitInfo != null"> and PARENT_ID &gt; 0</if>
+            <if test="status != null"> and STATUS = #{status}</if>
+        </where>
+    </select>
+	<select id="getAllSubSystemInitInfoList"   resultType="com.ehr.model.SystemInitInfoDO">
+		 select p.type_code as parent_type_code,s.id,s.type_code,
+		        s.type_name,s.type_name_en,s.status
+		 from
+             (select id,type_code from system_init_info where parent_id=0) p,
+             system_init_info s
+         where p.id=s.parent_id
+	</select>
+    <update id="update" parameterType="com.ehr.model.SystemInitInfoDO">
+		UPDATE System_init_info
+		<set>
+			 LAST_UPDATE_DATE = now(),LAST_UPDATED_BY=#{lastUpdatedBy}
+			<if test="typeCode != null"> , type_code = #{typeCode} </if>
+			<if test="status != null"> , STATUS = #{status} </if>
+			<if test="typeName != null"> , type_name = #{typeName} </if>
+			<if test="typeNameEn != null"> , type_name_en = #{typeNameEn} </if>
+		</set>
+		WHERE id=#{id} 
+	</update>
+    
+</mapper>

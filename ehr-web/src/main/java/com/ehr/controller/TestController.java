@@ -3,6 +3,9 @@ package com.ehr.controller;
 import javax.servlet.http.HttpServletRequest;
 
 
+import com.ehr.model.CrashTraceV2DO;
+import com.ehr.model.TestComplexView;
+import com.ehr.service.TestService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,7 +24,7 @@ import com.ehr.service.TestService;
 public class TestController {
 	@Autowired
 	public TestService testService;
-	@RequestMapping(value="/ehr/test.do",method=RequestMethod.GET)
+	@RequestMapping(value="ehr/test.do",method=RequestMethod.GET)
 	public String testQuery(HttpServletRequest request,Long id ){
 
 		 CrashTraceV2DO crashTrace = testService.getCrash(1);

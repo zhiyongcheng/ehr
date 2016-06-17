@@ -11,4 +11,6 @@ public interface SiteDAO {
 	public List<SiteDO> getSiteList(Map<String,Object> map);
 	
 	public int update(SiteDO site);
+
+	public void createTables(Map<String,Object> createSql);
 }

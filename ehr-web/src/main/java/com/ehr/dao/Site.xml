@@ -3,12 +3,11 @@
 <mapper namespace="com.ehr.dao.SiteDAO">
 
 	<sql id="selectColumns">
-		id,PARENT_ID,NAME,STATUS,SITE_TYPE,CUSTOM_THEME_ID,CREATE_BY,CREATE_DATE,UPDATE_BY,UPDATE_DATE
+		id,PARENT_ID,NAME,STATUS,SITE_TYPE,CUSTOM_THEME_ID,CREATED_BY,CREATE_DATE,LAST_UPDATED_BY,LAST_UPDATE_DATE
 	</sql>
-	
 
 	<sql id="insertColumns">
-		PARENT_ID,NAME,STATUS,SITE_TYPE,CUSTOM_THEME_ID,CREATE_BY,CREATE_DATE,UPDATE_BY,UPDATE_DATE
+		PARENT_ID,NAME,STATUS,SITE_TYPE,CUSTOM_THEME_ID,CREATED_BY,CREATE_DATE,LAST_UPDATED_BY,LAST_UPDATE_DATE
 	</sql>
 
 	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
@@ -20,49 +19,43 @@
 		#{name},
 		#{status},
 		#{siteType},
-		#{costomThemeId},
-		#{createBy},
-		#{createDate},
-		#{updateBy},
-		#{updateDate}
+		#{customThemeId},
+		#{createdBy},
+		now(),
+		#{lastUpdatedBy},
+		now()
 		 
 		)
 	</insert>
 	 
 	<select id="getSiteList" parameterType="java.util.Map" resultType="com.ehr.model.SiteDO">
-        SELECT
-        <include refid="selectColumns" />
+		SELECT
+		id,PARENT_ID,NAME,STATUS,SITE_TYPE,CUSTOM_THEME_ID,CREATED_BY,CREATE_DATE,LAST_UPDATED_BY,LAST_UPDATE_DATE
         FROM site
-        <where> 
-            <if test="id != null"> id = #{id}</if>
+        <where>
+			1=1
+            <if test="id != null"> AND id = #{id}</if>
 			<if test="name != null"> and NAME = #{name}</if>
             <if test="parentId != null"> and PARENT_ID = #{parentId}</if>
             <if test="status != null"> and STATUS = #{status}</if>
 			<if test="siteType != null"> and SITE_TYPE = #{siteType}</if>
-        </where>        
+        </where>
     </select>
     
     <update id="update" parameterType="com.ehr.model.SiteDO">
 		UPDATE site
 		<set>
-			 UPDATE_DATE = now(),UPDATE_BY=#{updateBy}
+			 LAST_UPDATE_DATE = now(),LAST_UPDATED_BY=#{lastUpdatedBy}
 			<if test="name != null"> , NAME = #{name} </if>
 			<if test="status != null"> , STATUS = #{status} </if>
 			<if test="customThemeId != null"> , CUSTOM_THEME_ID = #{customThemeId} </if>
 		</set>
 		WHERE id=#{id} 
 	</update>
-    
-    
-    
-    
-	<insert id="createTable" parameterType="string">
-	CREATE TABLE `test` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `name` varchar(100) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8
-	</insert>
+
+	<update id="createTables" parameterType="java.util.Map">
+		<![CDATA[ ${createSql}]]>
+	</update>
 	
 	<select id="getTest"  resultType="string">
         SELECT

@@ -3,12 +3,12 @@
 <mapper namespace="com.ehr.dao.CustomAttributeCodeValueDAO">
 
 	<sql id="selectColumns">
-		id,CODE_ID,CODE_VALUE,CODE_VALUE_EN,CREATE_BY,CREATE_DATE,UPDATE_BY,UPDATE_DATE
+		id,CODE_ID,CODE_VALUE,CODE_VALUE_EN,CREATED_BY,CREATE_DATE,LAST_UPDATED_BY,LAST_UPDATE_DATE
 	</sql>
 	
 
 	<sql id="insertColumns">
-		CODE_ID,CODE_VALUE,CODE_VALUE_EN,CREATE_BY,CREATE_DATE,UPDATE_BY,UPDATE_DATE
+		CODE_ID,CODE_VALUE,CODE_VALUE_EN,CREATED_BY,CREATE_DATE,LAST_UPDATED_BY,LAST_UPDATE_DATE
 	</sql>
 
 	<insert id="insert" useGeneratedKeys="true" keyProperty="id">
@@ -19,10 +19,10 @@
 		#{codeId},
 		#{codeValue},
 		#{codeValueEn},
-		#{createBy},
-		#{createDate},
-		#{updateBy},
-		#{updateDate}
+		#{createdBy},
+		now(),
+		#{lastUpdatedBy},
+		now()
 		 
 		)
 	</insert>
@@ -40,7 +40,7 @@
     <update id="update" parameterType="com.ehr.model.CustomAttributeCodeValueDO">
 		UPDATE custom_attribute_code_value
 		<set>
-			UPDATE_DATE = now(),UPDATE_BY=#{updateBy}
+			LAST_UPDATE_DATE = now(),LAST_UPDATED_BY=#{lastUpdatedBy}
 			<if test="codeValue != null"> , CODE_VALUE = #{codeValue} </if>
 			<if test="codeValueEn != null"> , CODE_VALUE_EN = #{codeValueEn} </if>
 		</set>

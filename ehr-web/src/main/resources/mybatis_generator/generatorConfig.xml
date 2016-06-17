@@ -16,18 +16,18 @@
                         password="132456"/>
 
         <javaModelGenerator targetPackage="ctas.test.entity"
-                            targetProject="D:/work/ehr/ehr-web/src/main/java/com/ehr/model">
+                            targetProject="D:/work/ehr/ehr-web/src/main/java/com/rcwl/hcm/model">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
 
         <sqlMapGenerator targetPackage="ctas.test.entity.xml"
-                         targetProject="D:/work/ehr/ehr-web/src/main/java/com/ehr/model">
+                         targetProject="D:/work/ehr/ehr-web/src/main/java/com/rcwl/hcm/model">
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
 
         <javaClientGenerator targetPackage="ctas.test.mapper"
-                             targetProject="D:/work/ehr/ehr-web/src/main/java/com/ehr/model" type="XMLMAPPER">
+                             targetProject="D:/work/ehr/ehr-web/src/main/java/com/rcwl/hcm/model" type="XMLMAPPER">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
